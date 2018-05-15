@@ -24,7 +24,8 @@ export default {
 
 <style scoped>
 .header {
-	height: 60px;
+	height: 80px;
 	line-height: 60px;
+	background-color: #fff;
 }
 </style>
