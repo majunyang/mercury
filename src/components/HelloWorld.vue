@@ -1,8 +1,12 @@
 <template>
   <div class="hello">
+    <img src="@/assets/logo.png">
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
     <ul>
+      <li>
+        <router-link to="console">Console</router-link>
+      </li>
       <li>
         <a
           href="https://vuejs.org"
@@ -85,18 +89,23 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
-  data () {
+  name: "HelloWorld",
+  data() {
     return {
-      msg: 'Welcome to Your Vue.js App'
-    }
+      msg: "Welcome to Your Vue.js App"
+    };
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
+.hello {
+  margin-top: 80px;
+  text-align: center;
+}
+h1,
+h2 {
   font-weight: normal;
 }
 ul {
