@@ -22,120 +22,86 @@
                         <el-col :span="4">
                             <div class="panel-body">
                                 <div class="input-group">
-                                    <el-button type="primary" icon="el-icon-plus">添加项目</el-button>
+                                    <el-button type="primary" icon="el-icon-plus" @click="dialogTableVisible=true, dialogButtonTitle='立即创建'">添加项目</el-button>
                                 </div>
                             </div>
                         </el-col>
                         <el-col :span='24'>
-                            <el-table
-                                :data="tableData3"
-                                height="450"
-                                border
-                                style="width: 100%">
-                                <el-table-column
-                                prop="name"
-                                label="项目名称"
-                                width="180">
+                            <el-table :data="projects" height="450" border style="width: 100%">
+                                <el-table-column prop="name" label="项目名称" width="180"/>
+                                <el-table-column prop="version" label="版本" width="180"/>
+                                <el-table-column prop="remark" label="备注"/>
+                                <el-table-column fixed="right" label="操作" width="200">
+                                    <template slot-scope="scope">
+                                        <el-button @click="project = scope.row, dialogTableVisible = true, dialogTitle='编辑项目', dialogButtonTitle='保存'" type="text">编辑</el-button>
+                                        <el-button type="text">Api 管理</el-button>
+                                    </template>
                                 </el-table-column>
-                                <el-table-column
-                                    prop="version"
-                                    label="版本"
-                                    width="180">
-                                </el-table-column>
-                                <el-table-column
-                                    prop="manager"
-                                    label="负责人"
-                                >
-                                </el-table-column>
-                                <el-table-column
-                                fixed="right"
-                                label="操作"
-                                width="200">
-                                <template slot-scope="scope">
-                                    <el-button @click="handleClick(scope.row)" type="text">编辑</el-button>
-                                    <el-button type="text">Api 管理</el-button>
-                                </template>
-                            </el-table-column>
-                        </el-table>
+                            </el-table>
                         </el-col>
                     </el-row>
                 </div>
             </div>
         </div>
     </div>
+    <el-dialog :title="dialogTitle" :visible.sync="dialogTableVisible">
+        <el-form ref="form" :model="project" label-width="130px">
+        <el-form-item label="项目名称">
+            <el-input v-model="project.name" placeholder="项目名称"></el-input>
+        </el-form-item>
+        <el-form-item label="版本号">
+            <el-input v-model="project.version" placeholder="版本号"></el-input>
+        </el-form-item>
+        <el-form-item label="描述">
+            <el-input type="password" v-model="project.remark" placeholder="项目描述"></el-input>
+        </el-form-item>
+        <el-form-item>
+            <el-button type="primary" @click="saveProject">{{ dialogButtonTitle }}</el-button>
+            <el-button @click="dialogTableVisible=false, saveDialog=false, project = {}">取消</el-button>
+        </el-form-item>
+        </el-form>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import { getProjectList } from "@/api/api";
+
 export default {
   data() {
     return {
+      saveDialog: true,
+      dialogTableVisible: false,
+      dialogButtonTitle: "立即创建",
+      dialogTitle: "添加项目",
       members: [],
       departments: [],
       project: {},
       projects: [],
-      project_name: "",
-      tableData3: [
-        {
-          id: 1,
-          version: "2016-05-03",
-          name: "王小虎",
-          manager: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          id: 2,
-          version: "2016-05-02",
-          name: "王小虎",
-          manager: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          id: 3,
-          version: "2016-05-04",
-          name: "王小虎",
-          manager: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          id: 4,
-          version: "2016-05-01",
-          name: "王小虎",
-          manager: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          id: 5,
-          version: "2016-05-08",
-          name: "王小虎",
-          manager: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          id: 6,
-          version: "2016-05-06",
-          name: "王小虎",
-          manager: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          id: 7,
-          version: "2016-05-07",
-          name: "王小虎",
-          manager: "上海市普陀区金沙江路 1518 弄"
-        }
-      ]
+      project_name: ""
     };
   },
+  created: function() {
+    this.searchProjects();
+  },
   methods: {
-    handleClick(row) {
-      console.log(row);
-    },
     searchProjects() {
       let _this = this;
+      getProjectList({ project_name: _this.project_name })
+        .then(response => {
+          if (response.data.code === 200) {
+            _this.projects = response.data.records;
+          }
+        })
+        .catch(error => {
+          console.info(error);
+        });
     },
     saveProject() {},
-    settingProject(project) {},
-    modifyProject() {},
     searchDepartments() {}
   }
 };
 </script>
 
 <style scoped>
-
 </style>

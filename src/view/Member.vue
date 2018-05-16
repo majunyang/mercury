@@ -6,7 +6,7 @@
                 <div class="panel-heading">
                     <h3 class="panel-title" style="display: inline">成员管理</h3>
                     <div class="pull-right">
-                        <a class="btn btn-primary btn-block" @click="dialogTableVisible = true">添加成员</a>
+                        <a class="btn btn-primary btn-block" @click="dialogTableVisible = true, saveDialog=true, dialogTitle='添加成员', dialogButtonTitle='立即创建'">添加成员</a>
                     </div>
                     <hr>
                 </div>
@@ -35,14 +35,14 @@
                             </div>
                         </el-col>
                         <el-col :span="19">
-                            <el-table :data="tableData3" max-height="530" stripe style="width: 100%">
+                            <el-table :data="members" max-height="530" stripe style="width: 100%">
                                 <el-table-column prop="name" label="姓名" width="180"/>
-                                <el-table-column prop="department_name" label="所属部门"/>
-                                <el-table-column prop="projects" label="参加项目"/>
+                                <el-table-column prop="department_id" label="所属部门"/>
+                                <el-table-column prop="email" label="邮箱"/>
                                 <el-table-column fixed="right" label="操作" width="100">
                                     <template slot-scope="scope">
-                                        <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-                                        <el-button type="text" size="small">编辑</el-button>
+                                        <el-button type="text" size="small">查看</el-button>
+                                        <el-button @click="member = scope.row, dialogTableVisible = true, dialogTitle='编辑成员', dialogButtonTitle='保存'" type="text" size="small">编辑</el-button>
                                     </template>
                                 </el-table-column>
                             </el-table>
@@ -52,7 +52,7 @@
           </div>
       </div>
     </div>
-    <el-dialog title="添加成员" :visible.sync="dialogTableVisible">
+    <el-dialog :title="dialogTitle" :visible.sync="dialogTableVisible">
         <el-form ref="form" :model="member" label-width="130px">
         <el-form-item label="姓名">
             <el-input v-model="member.name" placeholder="员工姓名"></el-input>
@@ -67,13 +67,13 @@
             <el-input v-model="member.email" placeholder="邮箱"></el-input>
         </el-form-item>
         <el-form-item label="所属部门">
-            <el-select v-model="member.region" placeholder="请选择所属部门">
-            <el-option v-for="item in departments" :key="item.name" :label="item.name" :value="item.name"></el-option>
+            <el-select v-model="member.department_id" placeholder="请选择所属部门">
+                <el-option v-for="item in departments" :key="item.name" :label="item.name" :value="item.id"></el-option>
             </el-select>
         </el-form-item>
         <el-form-item>
-            <el-button type="primary" @click="onSubmit">立即创建</el-button>
-            <el-button>取消</el-button>
+            <el-button type="primary" @click="saveMember">{{ dialogButtonTitle }}</el-button>
+            <el-button @click="dialogTableVisible=false, saveDialog=false, member = {}">取消</el-button>
         </el-form-item>
         </el-form>
     </el-dialog>
@@ -81,53 +81,81 @@
 </template>
 
 <script>
+import { getDepartments, addMember, getMembers } from "@/api/api";
+
 export default {
   data() {
     return {
+      dialogTitle: '添加成员',
+      dialogButtonTitle: '立即创建',
       members: [],
       member: { department: 0 },
       member_name: "",
-      departments: [{
-          name: 'abc'
-      },{
-          name: 'abcd'
-      },{
-          name: 'abce'
-      }],
+      departments: [],
       department: {},
       department_name: "",
       tableData3: [
         {
           date: "2016-05-03",
           name: "王小虎",
-          department_name: 'dd',
+          department_name: "dd",
           projects: 3
         }
       ],
       dialogTableVisible: false,
+      saveDialog: false
     };
   },
+  created: function() {
+      this.getDepartments();
+      this.searchMember();
+  },
   methods: {
-    searchMember() {
+    getDepartments: function(params) {
       let _this = this;
+      getDepartments({ department_name: _this.department_name })
+        .then(response => {
+          if (response.data.code === 200) {
+            _this.departments = response.data.records;
+          }
+        })
+        .catch(error => {
+          console.info(error);
+        });
     },
-    addMember() {},
-    settingMember(member) {
-      this.member = member;
-    },
-    modifyMember() {},
-    deleteMember() {},
-    searchDepartments() {
+    searchMember: function(department_id) {
       let _this = this;
+      getMembers({ department_name: _this.department_name })
+        .then(response => {
+          if (response.data.code === 200) {
+            _this.members = response.data.records;
+          }
+        })
+        .catch(error => {
+          console.info(error);
+        });
     },
-    settingDepartment() {},
-    addDepartment() {
-      let _this = this;
-    }
+    saveMember: function() {
+        let _this = this;
+        if (_this.saveDialog) {
+         addMember(_this.member).then(response => {
+          if (response.data.code === 200) {
+              _this.dialogTableVisible = false
+              _this.searchMember()
+          } else {
+              alert('添加失败')
+          }
+        }).catch(error => {
+            console.error(error)
+        })
+        } else {
+            alert(_this.saveDialog)
+        }
+        
+    },
   }
 };
 </script>
 
 <style scoped>
-
 </style>

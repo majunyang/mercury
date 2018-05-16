@@ -8,7 +8,9 @@ import router from './router'
 import store from './store/store'
 import '@/assets/css/bootstrap.min.css'
 import '@/assets/css/style.css'
-
+import './axios_config/'
+import Axios from 'axios'
+Vue.prototype.$http = Axios
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 /* eslint-disable no-new */
