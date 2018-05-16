@@ -1,7 +1,7 @@
 <template>
   <div>
       <!-- MAIN CONTENT -->
-    <div class="main-content">
+    <div class="main-content no-padding">
         <div class="container-fluid">
             <div class="panel panel-headline">
                 <div class="panel-heading">
@@ -12,14 +12,9 @@
                         <el-col :span="20">
                             <div class="panel-body">
                                 <div class="input-group">
-                                    <el-form ref="form" :model="form" label-width="80px">
-                                    <el-form-item>
-                                        <el-input v-model="project_name"></el-input>
-                                    </el-form-item></el-form>
-
+                                    <input class="form-control" v-model="project_name" placeholder="项目名称" type="text">
                                     <span class="input-group-btn">
-                                        <button class="btn btn-primary" type="button"
-                                                @click="searchProjects()">Go!</button>
+                                        <button class="btn btn-primary" type="button" @click="searchProjects()">Go!</button>
                                     </span>
                                 </div>
                             </div>
