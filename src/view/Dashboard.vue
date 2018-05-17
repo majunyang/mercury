@@ -1,5 +1,6 @@
 <template>
   <div>
+      <router-view></router-view>
     <div class="main-content no-padding">
       <div class="container-fluid">
           <div class="panel panel-headline">

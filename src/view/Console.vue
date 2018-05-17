@@ -1,6 +1,6 @@
 <template>
-  <div>
-      <el-container>
+  <div style="height: 100%;">
+      <el-container style="height: 100%;">
         <el-header class="no-padding header">
             <m-header/>
         </el-header>
@@ -55,7 +55,7 @@ export default {
       console.log(key, keyPath);
     }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -70,7 +70,8 @@ export default {
 
 .aside{
   width: 200px !important;
-  height: calc(100% - 80px) !important;
+  height: 100% !important;
+  background-color: #545c64;
 }
 
 .header {

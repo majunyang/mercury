@@ -1,5 +1,6 @@
 <template>
   <div>
+      <router-view></router-view>
       <!-- MAIN CONTENT -->
     <div class="main-content no-padding">
         <div class="container-fluid">
@@ -22,7 +23,7 @@
                         <el-col :span="4">
                             <div class="panel-body">
                                 <div class="input-group">
-                                    <el-button type="primary" icon="el-icon-plus" @click="dialogTableVisible=true, dialogButtonTitle='立即创建'">添加项目</el-button>
+                                    <el-button type="primary" icon="el-icon-plus" @click="dialogTableVisible=true, dialogTitle='添加项目', dialogButtonTitle='立即创建'">添加项目</el-button>
                                 </div>
                             </div>
                         </el-col>
@@ -30,11 +31,11 @@
                             <el-table :data="projects" height="450" border style="width: 100%">
                                 <el-table-column prop="name" label="项目名称" width="180"/>
                                 <el-table-column prop="version" label="版本" width="180"/>
-                                <el-table-column prop="remark" label="备注"/>
+                                <el-table-column prop="remark" label="描述"/>
                                 <el-table-column fixed="right" label="操作" width="200">
                                     <template slot-scope="scope">
                                         <el-button @click="project = scope.row, dialogTableVisible = true, dialogTitle='编辑项目', dialogButtonTitle='保存'" type="text">编辑</el-button>
-                                        <el-button type="text">Api 管理</el-button>
+                                        <router-link to="/console/project/api">Api 管理</router-link>
                                     </template>
                                 </el-table-column>
                             </el-table>
@@ -53,7 +54,7 @@
             <el-input v-model="project.version" placeholder="版本号"></el-input>
         </el-form-item>
         <el-form-item label="描述">
-            <el-input type="password" v-model="project.remark" placeholder="项目描述"></el-input>
+            <el-input v-model="project.remark" placeholder="项目描述"></el-input>
         </el-form-item>
         <el-form-item>
             <el-button type="primary" @click="saveProject">{{ dialogButtonTitle }}</el-button>
@@ -77,7 +78,9 @@ export default {
       members: [],
       departments: [],
       project: {},
-      projects: [],
+      projects: [
+          {id: 1, name: '冥王星', version: 'V1.0.1', remark: '冥王星不是一个行星'}
+          ],
       project_name: ""
     };
   },

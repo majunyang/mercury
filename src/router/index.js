@@ -5,6 +5,8 @@ import Console from '@/view/Console'
 import DashBoard from '@/view/DashBoard'
 import Project from '@/view/Project'
 import Member from '@/view/Member'
+import Api from '@/view/Api'
+import Empty from '@/view/Empty'
 
 Vue.use(Router)
 
@@ -25,7 +27,12 @@ let router = new Router({
       }, {
         path: 'project',
         name: 'project',
-        component: Project
+        component: Project,
+        children: [{
+          path: 'api',
+          name: 'api',
+          component: Api
+        }]
       }, {
         path: 'member',
         name: 'member',
