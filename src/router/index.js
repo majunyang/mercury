@@ -21,6 +21,10 @@ let router = new Router({
       name: 'Login',
       component: Login
     }, {
+      path: '/api',
+      name: 'api',
+      component: Api
+    }, {
       path: '/console',
       name: 'console',
       component: Console,
@@ -32,10 +36,6 @@ let router = new Router({
         path: 'project',
         name: 'project',
         component: Project
-      }, {
-        path: 'api',
-        name: 'api',
-        component: Api
       }, {
         path: 'member',
         name: 'member',

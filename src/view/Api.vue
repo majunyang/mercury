@@ -1,144 +1,117 @@
 <template>
   <div class="main-content">
         <div class="row">
-            <div class="col-sm-9">
-                <div class="wrapper wrapper-content animated fadeInUp">
-                    <div class="ibox">
-                        <div class="ibox-content">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="m-b-md">
-                                        <a href="" class="btn btn-white btn-xs pull-right">编辑项目</a>
-                                        <h2>{{ project.name }} </h2>
-                                    </div>
-                                    <dl class="dl-horizontal">
-                                        <dt>状态：</dt>
-                                        <dd>
-                                            <span class="label label-primary" v-if="project.status == 0">进行中</span>
-                                            <span class="label label-primary" v-else-if="project.status == 1">暂停开发</span>
-                                            <span class="label label-primary" v-else-if="project.status == 2">开发完成</span>
-                                            <span class="label label-primary" v-else-if="project.status == 3">已废弃</span>
-                                            <span class="label label-primary" v-else>鬼知道这个项目什么状态</span>
-                                        </dd>
-                                    </dl>
-                                </div>
+            <div class="col-sm-2">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content mailbox-content">
+                        <div class="file-manager">
+                            <a data-toggle="modal" href="#modal_group"
+                               class="btn btn-block btn-info compose-mail">新建分组</a>
+                            <div class="space-25"></div>
+                            <h3>分组</h3>
+                            <ul class="folder-list m-b-md" style="padding: 0">
+                                <li>
+                                    <a href="mailbox.html"> 所有接口 </a>
+                                </li>
+                            </ul>
+                            <h5>分类</h5>
+                                                        <ul class="category-list" style="padding: 0">
+                                                            <li>
+                                                                <a> <i class="fa fa-circle text-navy"></i> 工作</a>
+                                                            </li>
+                                                            <li>
+                                                                <a> <i class="fa fa-circle text-danger"></i> 文档</a>
+                                                            </li>
+                                                            <li>
+                                                                <a> <i class="fa fa-circle text-primary"></i> 社交</a>
+                                                            </li>
+                                                            <li>
+                                                                <a> <i class="fa fa-circle text-info"></i> 广告</a>
+                                                            </li>
+                                                            <li>
+                                                              <a> <i class="fa fa-circle text-warning"></i> 客户端</a>
+                                                           </li>
+                                                       </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-10 animated fadeInRight">
+                <div class="mail-box-header">
+                    <router-link class="btn btn-success btn-sm pull-left" :to="'/console/home/api/add?project_id=' + this.$route.query.project_id">新建接口</router-link>
+                    <form class="pull-left mail-search" style="margin-left: 10px;">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-sm" name="search" placeholder="搜索接口名称、URL等">
+                            <div class="input-group-btn">
+                                <button type="button" @click="getApis" class="btn btn-sm btn-primary">
+                                    搜索
+                                </button>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <dl class="dl-horizontal">
-                                        <dt>项目经理：</dt>
-                                        <dd>{{ project.manager_name }}</dd>
-                                        <dt>所属部门：</dt>
-                                        <dd>{{ project.department_name }}</dd>
-                                        <dt>版本：</dt>
-                                        <dd>{{ project.version }}</dd>
-                                    </dl>
+                        </div>
+                    </form>
+                                        
+                </div>
+                <div class="mail-box" style="padding-top: 20px;">
+
+                    <table class="table table-hover table-mail">
+                        <thead>
+                        <tr>
+                            <th>接口名称</th>
+                            <th>URL</th>
+                            <th>创建者</th>
+                            <th>最后更新</th>
+                            <th>最后更新时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="(item, index) in apis" :key='item.id'>
+                            <td>{{ item.name }}</td>
+                            <td><label class="label-success label" style="padding: 3px;"> {{ item.method }} </label>
+                                &nbsp;&nbsp;{{ item.url }}
+                            </td>
+                            <td>张瑀楠</td>
+                            <td>张瑀楠</td>
+                            <td>{{ item.update_time }}</td>
+                            <td><router-link :to="'/console/home/api/detail?id=' + item.id + '&project_id=' + item.project_id">查看</router-link> | <a data-a="'{% url 'api/edit' %}?id=' + item.id">修改</a> | <span
+                                    @click="deleteApi(item.id,index)" class="delete">删除</span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="modal_group" class="modal fade" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3 class="m-t-none m-b">添加分组</h3>
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="分组名称">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary" type="button"
+                                                @click="addGroup">添加</button>
+                                    </span>
                                 </div>
-                                <div class="col-sm-7" id="cluster_info">
-                                    <dl class="dl-horizontal">
-                                        <dt>最后更新：</dt>
-                                        <dd>{{ project.update_time }}</dd>
-                                        <dt>创建于：</dt>
-                                        <dd>{{ project.create_time }}</dd>
-                                        <dt>团队成员：</dt>
-                                        <dd class="project-people">
-                                            <a href="">
-                                                <img alt="image" class="img-circle">
-                                            </a>
-                                        </dd>
-                                    </dl>
-                                </div>
-                            </div>
-                            <div class="row m-t-sm">
-                                <div class="col-sm-12">
-                                    <div class="panel blank-panel">
-                                        <div class="panel-heading">
-                                            <div class="panel-options">
-                                                <ul class="nav nav-tabs">
-                                                    <li><a data-toggle="tab">团队消息</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="panel-body">
-                                            <div class="tab-content">
-                                                <div class="tab-pane active" id="tab-1">
-                                                    <div class="feed-activity-list">
-                                                        <div class="feed-element">
-                                                            <a class="pull-left">
-                                                                <img alt="image" class="img-circle">
-                                                            </a>
-                                                            <div class="media-body ">
-                                                                <small class="pull-right text-navy">1天前</small>
-                                                                <strong>奔波儿灞</strong> 关注了 <strong>灞波儿奔</strong>.
-                                                                <br>
-                                                                <small class="text-muted">54分钟前 来自 皮皮时光机</small>
-                                                                <div class="actions">
-                                                                    <a class="btn btn-xs btn-white"><i
-                                                                                class="fa fa-thumbs-up"></i> 赞 </a>
-                                                                    <a class="btn btn-xs btn-danger"><i
-                                                                                class="fa fa-heart"></i> 收藏</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-    
-    
-                                                        <div class="feed-element">
-                                                            <a class="pull-left">
-                                                                <img alt="image" class="img-circle">
-                                                            </a>
-                                                            <div class="media-body ">
-                                                                <small class="pull-right">2小时前</small>
-                                                                <strong>作家崔成浩</strong> 抽奖中了20万
-                                                                <br>
-                                                                <small class="text-muted">今天 09:27 来自 Koryolink iPhone
-                                                                    </small>
-                                                                <div class="well">
-                                                                    抽奖，人民币2000元，从转发这个微博的粉丝中抽取一人。11月16日平台开奖。随手一转，万一中了呢？
-                                                                </div>
-                                                                <div class="pull-right">
-                                                                    <a class="btn btn-xs btn-white"><i
-                                                                                class="fa fa-thumbs-up"></i> 赞 </a>
-                                                                    <a class="btn btn-xs btn-white"><i
-                                                                                class="fa fa-heart"></i> 收藏</a>
-                                                                    <a class="btn btn-xs btn-primary"><i
-                                                                                class="fa fa-pencil"></i> 评论</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-3">
-                <div class="wrapper wrapper-content project-manager">
-                    <h4>项目描述</h4>
-                    <img class="img-responsive">
-                    <p class="small">
-                        <br>
-                        {{ project.remark }}
-                    </p>
-                    <div class="m-t-md">
-                        <router-link class="btn btn-xs btn-primary" :to="'/console/home/apim?project_id=' + project.id">添加文档</router-link>
-                    </div>
-                </div>
-            </div>
         </div>
-    </div>
+    </div>  
 </template>
 
 <script>
 export default {
   data() {
     return {
-      project: {}
+      project: {},
+      apis: []
     };
   },
   mounted: function() {

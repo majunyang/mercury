@@ -7,17 +7,17 @@
                     <h2>Sign In</h2>
                     <div class="form-group">
                         <label for="username" class="sr-only">Username</label>
-                        <input type="text" class="form-control" id="username" placeholder="Username" autocomplete="off">
+                        <input type="text" class="form-control" v-model="userInfo.username" placeholder="Username" autocomplete="off">
                     </div>
                     <div class="form-group">
                         <label for="password" class="sr-only">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="Password" autocomplete="off">
+                        <input type="password" class="form-control" v-model="userInfo.password" placeholder="Password" autocomplete="off">
                     </div>
                     <div class="form-group">
                         <p>Not registered? <a href="">Sign Up</a> | <a href="">Forgot Password?</a></p>
                     </div>
                     <div class="form-group">
-                        <button type="button" value="Sign In" class="btn btn-primary">登录</button>
+                        <button type="button" @click="login" class="btn btn-primary">Sign In</button>
                     </div>
                 </form>
             </div>
@@ -31,7 +31,22 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      userInfo: {
+        username: "",
+        password: ""
+      }
+    };
+  },
+  methods: {
+    login: function() {
+      alert(JSON.stringify(this.userInfo))
+      this.$router.push({ path: "/console" });
+    }
+  }
+};
 </script>
 
 
@@ -41,7 +56,7 @@ export default {};
   height: 100%;
   font-size: 16px;
   color: #848484;
-  background: #ffffff url('../assets/img/geometry.png') repeat;
+  background: #ffffff url("../assets/img/geometry.png") repeat;
 }
 
 a {
@@ -127,18 +142,19 @@ a:hover {
   color: rgba(0, 0, 0, 0.3);
   text-transform: uppercase;
 }
-.copyrights{
-	text-indent:-9999px;
-	height:0;
-	line-height:0;
-	font-size:0;
-	overflow:hidden;
+.copyrights {
+  text-indent: -9999px;
+  height: 0;
+  line-height: 0;
+  font-size: 0;
+  overflow: hidden;
 }
 .fh5co-form .form-control:-moz-placeholder {
   color: rgba(0, 0, 0, 0.3);
   text-transform: uppercase;
 }
-.fh5co-form .form-control:focus, .fh5co-form .form-control:active {
+.fh5co-form .form-control:focus,
+.fh5co-form .form-control:active {
   border-bottom: 1px solid rgba(0, 0, 0, 0.4);
 }
 
@@ -154,13 +170,16 @@ a:hover {
   -o-box-shadow: -2px 10px 20px -1px rgba(51, 204, 204, 0.4);
   box-shadow: -2px 10px 20px -1px rgba(51, 204, 204, 0.4);
 }
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
   color: #ffffff;
   background: #47d1d1 !important;
   outline: none;
 }
 
-input, textarea {
+input,
+textarea {
   color: #000;
 }
 
