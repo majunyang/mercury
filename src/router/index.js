@@ -27,12 +27,11 @@ let router = new Router({
       }, {
         path: 'project',
         name: 'project',
-        component: Project,
-        children: [{
-          path: 'api',
-          name: 'api',
-          component: Api
-        }]
+        component: Project
+      }, {
+        path: 'api',
+        name: 'api',
+        component: Api
       }, {
         path: 'member',
         name: 'member',

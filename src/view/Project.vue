@@ -1,10 +1,20 @@
 <template>
   <div>
-      <router-view></router-view>
-      <!-- MAIN CONTENT -->
     <div class="main-content no-padding">
         <div class="container-fluid">
-            <div class="panel panel-headline">
+            <div class="panel panel-headline" v-show="!showList">
+                 <div class="panel-body">
+                <el-row>
+                    <el-button round @click="showList=true" icon="el-icon-back">返回</el-button>
+                    <el-button type="danger" icon="el-icon-delete" round class="pull-right">停止项目</el-button>
+                    <el-button type="primary" round icon="el-icon-star-off" class="pull-right">关注</el-button>
+                    </el-row>
+                <el-row>
+                    <el-col :span="2">dg</el-col>
+                </el-row>
+                 </div>
+            </div>
+            <div class="panel panel-headline" v-show="showList">
                 <div class="panel-heading">
                     <h3 class="panel-title" style="display: inline">项目管理</h3>
                 </div>
@@ -35,7 +45,8 @@
                                 <el-table-column fixed="right" label="操作" width="200">
                                     <template slot-scope="scope">
                                         <el-button @click="project = scope.row, dialogTableVisible = true, dialogTitle='编辑项目', dialogButtonTitle='保存'" type="text">编辑</el-button>
-                                        <router-link to="/console/project/api">Api 管理</router-link>
+                                        <el-button @click="projectDetail(scope.row)" type="text">详情</el-button>
+                                        <router-link to="/console/api">Api 管理</router-link>
                                     </template>
                                 </el-table-column>
                             </el-table>
@@ -71,6 +82,7 @@ import { getProjectList } from "@/api/api";
 export default {
   data() {
     return {
+      showList: true,
       saveDialog: true,
       dialogTableVisible: false,
       dialogButtonTitle: "立即创建",
@@ -79,8 +91,13 @@ export default {
       departments: [],
       project: {},
       projects: [
-          {id: 1, name: '冥王星', version: 'V1.0.1', remark: '冥王星不是一个行星'}
-          ],
+        {
+          id: 1,
+          name: "冥王星",
+          version: "V1.0.1",
+          remark: "冥王星不是一个行星"
+        }
+      ],
       project_name: ""
     };
   },
@@ -100,6 +117,10 @@ export default {
           console.info(error);
         });
     },
+    projectDetail: function() {
+      let _this = this;
+      _this.showList = false;
+    },
     saveProject() {},
     searchDepartments() {}
   }
@@ -107,4 +128,5 @@ export default {
 </script>
 
 <style scoped>
+
 </style>
