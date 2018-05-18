@@ -10,7 +10,7 @@
                     <el-button type="primary" round icon="el-icon-star-off" class="pull-right">关注</el-button>
                     </el-row>
                 <el-row>
-                    <el-col :span="2">dg</el-col>
+                    <el-col :span="2">项目详情</el-col>
                 </el-row>
                  </div>
             </div>

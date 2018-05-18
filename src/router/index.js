@@ -6,7 +6,7 @@ import DashBoard from '@/view/DashBoard'
 import Project from '@/view/Project'
 import Member from '@/view/Member'
 import Api from '@/view/Api'
-import Empty from '@/view/Empty'
+import Login from '@/view/Login'
 
 Vue.use(Router)
 
@@ -16,6 +16,10 @@ let router = new Router({
       path: '/',
       name: 'HelloWorld',
       component: HelloWorld
+    }, {
+      path: '/login',
+      name: 'Login',
+      component: Login
     }, {
       path: '/console',
       name: 'console',

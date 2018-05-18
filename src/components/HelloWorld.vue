@@ -5,6 +5,9 @@
     <h2>Essential Links</h2>
     <ul>
       <li>
+        <router-link to="login">Login</router-link>
+      </li>
+      <li>
         <router-link to="console">Console</router-link>
       </li>
       <li>
