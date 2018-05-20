@@ -72,7 +72,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(item,index) in request_params">
+                                <tr v-for="(item,index) in request_params" :key="item.name">
                                     <td class="no-padding">
                                         <input v-model="item.name" placeholder="参数名" class="form-control no-border width100" style="border: none;">
                                     </td>

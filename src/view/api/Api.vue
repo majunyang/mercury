@@ -9,11 +9,11 @@
               <el-menu default-active="/console/dashboard" class="el-menu-vertical-demo" @open="handleOpen" 
                 @close="handleClose" :collapse="isCollapse" background-color="#545c64" text-color="#fff"
                 active-text-color="#ffd04b" :router="true">
-                <el-menu-item index="/console/dashboard">
+                <el-menu-item :index="'/console/dashboard?projectId=' + this.$route.query.projectId">
                     <i class="el-icon-back"></i>
                     <span slot="title">Return</span>
                 </el-menu-item>
-                <el-menu-item index="/console/project">
+                <el-menu-item :index="'/api/project?projectId=' + this.$route.query.projectId">
                     <i class="el-icon-menu"></i>
                     <span slot="title">Project</span>
                 </el-menu-item>
@@ -25,11 +25,11 @@
                     <i class="el-icon-menu"></i>
                     <span slot="title">环境配置</span>
                 </el-menu-item>
-                <el-menu-item index="/api/member">
+                <el-menu-item :index="'/api/member?projectId=' + this.$route.query.projectId">
                     <i class="el-icon-menu"></i>
                     <span slot="title">团队成员</span>
                 </el-menu-item>
-                <el-menu-item index="/api/dynamic">
+                <el-menu-item :index="'/api/dynamic?projectId=' + this.$route.query.projectId">
                     <i class="el-icon-menu"></i>
                     <span slot="title">项目动态</span>
                 </el-menu-item>
