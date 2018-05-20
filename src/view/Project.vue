@@ -152,7 +152,7 @@
                                     <template slot-scope="scope">
                                         <el-button @click="project = scope.row, dialogTableVisible = true, dialogTitle='编辑项目', dialogButtonTitle='保存'" type="text">编辑</el-button>
                                         <el-button @click="projectDetail(scope.row)" type="text">详情</el-button>
-                                        <router-link to="/console/api">Api 管理</router-link>
+                                        <router-link :to="'/api?projectId=' + scope.row.id">Api 管理</router-link>
                                     </template>
                                 </el-table-column>
                             </el-table>

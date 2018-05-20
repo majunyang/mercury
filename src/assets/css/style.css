@@ -837,18 +837,6 @@ fieldset[disabled] .btn {
     font-weight: 300;
 }
 
-.panel .panel-heading button {
-    padding: 0;
-    margin-left: 5px;
-    background-color: transparent;
-    border: none;
-    outline: none;
-}
-
-.panel .panel-heading button i {
-    font-size: 14px;
-}
-
 .panel .panel-body {
     padding-top: 10px;
     padding-bottom: 15px;
@@ -1284,6 +1272,10 @@ ul.activity-list > li .timestamp {
     padding: 0 !important;
 }
 
+.margin-top-20 {
+    margin-top: 20px !important;
+}
+
 .margin-top-30 {
     margin-top: 30px !important;
 }
@@ -1444,3 +1436,4 @@ ul.activity-list > li .timestamp {
 .profile-info ul > li {
     margin-bottom: 8px;
 }
+

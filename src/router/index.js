@@ -5,8 +5,16 @@ import Console from '@/view/Console'
 import DashBoard from '@/view/DashBoard'
 import Project from '@/view/Project'
 import Member from '@/view/Member'
-import Api from '@/view/Api'
+
 import Login from '@/view/Login'
+
+import Api from '@/view/api/Api'
+import ApiList from '@/view/api/ApiList'
+import ApiAdd from '@/view/api/ApiAdd'
+import Environment from '@/view/Environment'
+import ApiMember from '@/view/api/Member'
+import Dynamic from '@/view/api/Dynamic'
+import ApiProject from '@/view/api/Project'
 
 Vue.use(Router)
 
@@ -23,7 +31,32 @@ let router = new Router({
     }, {
       path: '/api',
       name: 'api',
-      component: Api
+      component: Api,
+      children: [{
+        path: 'project',
+        name: 'apiProejct',
+        component: ApiProject
+      }, {
+        path: 'member',
+        name: 'apimember',
+        component: ApiMember
+      }, {
+        path: 'environment',
+        name: 'environment',
+        component: Environment
+      }, {
+        path: 'dynamic',
+        name: 'dynamic',
+        component: Dynamic
+      }, {
+        path: 'list',
+        name: 'apilist',
+        component: ApiList
+      }, {
+        path: 'add',
+        name: 'apiAdd',
+        component: ApiAdd
+      }]
     }, {
       path: '/console',
       name: 'console',
