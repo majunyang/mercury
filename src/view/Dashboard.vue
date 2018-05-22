@@ -6,7 +6,7 @@
           <div class="panel panel-headline">
                 <div class="panel-heading">
                     <div class="pull-right">
-                        <a>添加成员</a>
+                        <a>控制台</a>
                     </div>
                 </div>
                 <div class="panel-body">
