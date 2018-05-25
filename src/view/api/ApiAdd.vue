@@ -78,19 +78,8 @@
                                     </td>
                                     <td class="no-padding">
                                         <select v-model="item.type" class="form-control no-border width100" style="border: none;">
-                                                                        <option value="1">[string]</option>
-                                                                        <option value="2">[json]</option>
-                                                                        <option value="3">[int]</option>
-                                                                        <option value="4">[float]</option>
-                                                                        <option value="5">[double]</option>
-                                                                        <option value="6">[date]</option>
-                                                                        <option value="7">[datetime]</option>
-                                                                        <option value="8">[boolean]</option>
-                                                                        <option value="9">[byte]</option>
-                                                                        <option value="10">[short]</option>
-                                                                        <option value="11">[long]</option>
-                                                                        <option value="12">[array]</option>
-                                                                    </select>
+                                            <option v-for="item in data_types" :key='item.id' :value="item.id">{{ item.value }}</option>
+                                        </select>
                                     </td>
                                     <td><input type="checkbox" v-model="item.required"></td>
                                     <td class="no-padding" style="width: 200px;">
