@@ -2,7 +2,7 @@
     <div class="main-content no-padding">
         <div class="container-fluid">
             <div>
-                <el-button type="success">添加环境</el-button>
+                <el-button type="success" @click="dialogTableVisible = true">添加环境</el-button>
             </div>
             <div class="panel margin-top-20">
                 <div class="panel-body">
@@ -53,6 +53,9 @@
                 </div>
             </div>
         </div>
+        <el-dialog title="添加环境" :visible.sync="dialogTableVisible">
+            
+        </el-dialog>
     </div>
 </template>
 
@@ -61,6 +64,7 @@
 export default {
   data() {
     return {
+      dialogTableVisible: false,
       environments: [{
           id: 1,
           name: 'abc'
