@@ -17,6 +17,11 @@
                     <i class="el-icon-menu"></i>
                     <span slot="title">Project</span>
                 </el-menu-item>
+                <el-menu-item index="/console/notification">
+                    <i class="el-icon-message"></i>
+                    <span slot="title">Notification</span>
+                </el-menu-item>
+                
                 <el-menu-item index="/console/member">
                     <i class="el-icon-menu"></i>
                     <span slot="title">Member</span>
@@ -61,7 +66,7 @@ export default {
 <style scoped>
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
-  min-height: 400px;
+  min-height: 200px;
 }
 
 .content-v {

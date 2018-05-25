@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Console from '@/view/Console'
 import DashBoard from '@/view/DashBoard'
-import Project from '@/view/Project'
+import Project from '@/view/project/Project'
 import Member from '@/view/Member'
 
 import Login from '@/view/Login'
@@ -11,6 +11,7 @@ import Login from '@/view/Login'
 import Api from '@/view/api/Api'
 import ApiList from '@/view/api/ApiList'
 import ApiAdd from '@/view/api/ApiAdd'
+import ApiDetail from '@/view/api/ApiDetail'
 import Environment from '@/view/Environment'
 import ApiMember from '@/view/api/Member'
 import Dynamic from '@/view/api/Dynamic'
@@ -49,6 +50,10 @@ let router = new Router({
         name: 'dynamic',
         component: Dynamic
       }, {
+        path: 'detail',
+        name: 'detail',
+        component: ApiDetail
+      }, {
         path: 'list',
         name: 'apilist',
         component: ApiList
@@ -83,6 +88,11 @@ router.beforeEach((to, from, next) => {
     if (to.path === '/console' || to.path === '/console/') {
       next({
         path: '/console/dashboard'
+      })
+    } else if (to.path === '/api' ||  to.path === '/api/') {
+      next({
+        path: '/api/list',
+        query: to.query
       })
     } else {
       next()

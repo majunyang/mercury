@@ -8,7 +8,8 @@
                             <div class="ibox" style="margin-bottom: 12px;">
                                 <router-link :to="'/api/list?projectId=' + this.$route.query.projectId" class="btn btn-sm btn-info">
                                     <span class="lnr lnr-chevron-left"></span> 返回列表</router-link>
-                                <button class="btn btn-sm btn-success" @click="save">保存</button>
+                                <button class="btn btn-sm btn-success">测试</button>
+                                <button class="btn btn-sm btn-success">版本</button>
                             </div>
                         </div>
                     </div>
@@ -68,7 +69,6 @@
                                     <th style="width: 50px;">必填</th>
                                     <th>示例</th>
                                     <th>说明</th>
-                                    <th style="width: 150px;">操作</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -98,29 +98,6 @@
                                     </td>
                                     <td class="no-padding">
                                         <input v-model="item.remark" placeholder="参数名" class="form-control no-border width100" style="border: none;">
-                                    </td>
-                                    <td>
-                                        <i class="el-icon-delete" @click="deleteRequestParam(item.id,index)"></i>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="no-padding">
-                                        <input v-model="request_param.name" placeholder="参数名" class="form-control no-border width100" style="border: none;">
-                                    </td>
-                                    <td class="no-padding">
-                                        <select v-model="request_param.type" class="form-control no-border width100" style="border: none;">
-                                            <option v-for="item in data_types" :key='item.id' :value="item.id">{{ item.value }}</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="checkbox" v-model="request_param.required"></td>
-                                    <td class="no-padding" style="width: 200px;">
-                                        <input v-model="request_param.example_value" placeholder="示例" class="form-control no-border width100" style="border: none;">
-                                    </td>
-                                    <td class="no-padding">
-                                        <input v-model="request_param.remark" placeholder="说明" class="form-control no-border width100" style="border: none;">
-                                    </td>
-                                    <td>
-                                        <i class="el-icon-plus" @click="addRequestParam"></i>
                                     </td>
                                 </tr>
                             </tbody>
@@ -185,7 +162,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-for="(item,index) in response_params" :key="item.name" >
+                                            <tr v-for="(item,index) in response_params">
                                                 <td class="no-padding">
                                                     <input v-model="item.name" placeholder="参数名" class="form-control no-border width100" style="border: none;">
                                                 </td>
@@ -201,35 +178,10 @@
                                                 <td class="no-padding">
                                                     <input v-model="item.remark" placeholder="参数名" class="form-control no-border width100" style="border: none;">
                                                 </td>
-                                                <td>
-                                                    <span class="lnr lnr-cog" style="padding-right: 10px;"></span>
-                                                    <span class="lnr lnr-trash" @click="deleteResponseParam(item.id,index)"></span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="no-padding">
-                                                    <input v-model="response_param.name" placeholder="参数名" class="form-control no-border width100" style="border: none;">
-                                                </td>
-                                                <td class="no-padding">
-                                                    <select v-model="response_param.type" class="form-control no-border width100" style="border: none;">
-                                                                    <option v-for="item in data_types" :key='item.id' :value="item.id">{{ item.value }}</option>
-                                                                </select>
-                                                </td>
-                                                <td><input type="checkbox" v-model="response_param.required"></td>
-                                                <td class="no-padding" style="width: 200px;">
-                                                    <input v-model="response_param.example_value" placeholder="示例" class="form-control no-border width100" style="border: none;">
-                                                </td>
-                                                <td class="no-padding">
-                                                    <input v-model="response_param.remark" placeholder="说明" class="form-control no-border width100" style="border: none;">
-                                                </td>
-                                                <td>
-                                                    <span class="lnr lnr-plus-circle" style="padding-right: 10px;" @click="addResponseParam"></span>
-                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
-    
                             </div>
                         </div>
                     </div>
@@ -329,55 +281,13 @@ export default {
   methods: {
     getApi: function() {
       if (
-        !!this.$route.query.create &&
         !!this.$route.query.apiId &&
         this.$route.query.apiId > 0
       ) {
         alert("查询数据");
+      } else {
+          alert("接口不存在");
       }
-    },
-    save() {
-      let _this = this;
-      let params = {
-        api_param: _this.api_param,
-        project_id: _this.$route.query.project_id,
-        request_params: _this.request_params,
-        response_params: _this.response_params
-      };
-      //   addApi(params).then(response => {
-      //       if (response.data.code === 200) {
-      //         _this.$router.push({ path: "/console/home/api/list?project_id=" + _this.$route.query.project_id });
-      //       }
-      //   }).catch(error => {
-      //       console.info(error);
-      //   })
-    },
-    addRequestParam() {
-      this.request_params.push(this.request_param);
-      this.request_param = {
-        type: 1,
-        required: true
-      };
-    },
-    addRequestHeader() {
-      this.request_headers.push(this.request_header);
-      this.request_header = {};
-    },
-    addResponseParam() {
-      this.response_params.push(this.response_param);
-      this.response_param = {
-        type: 1,
-        required: true
-      };
-    },
-    deleteRequestParam(id, i) {
-      this.request_params.splice(i, 1);
-    },
-    deleteRequestHeader(id, i) {
-      this.request_headers.splice(i, 1);
-    },
-    deleteResponseParam(id, i) {
-      this.response_params.splice(i, 1);
     }
   }
 };

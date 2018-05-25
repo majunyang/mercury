@@ -27,8 +27,8 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="list-group">
-                                        <a href="#" class="list-group-item list-group-item-info">全部</a>
-                                        <a v-for="department in departments" :data-id="department.id" href="#" class="list-group-item list-group-item-info">{{ department.name }}</a>
+                                        <a data-id=0 class="list-group-item list-group-item-info">全部</a>
+                                        <a v-for="department in departments" :key="department.id" :data-id="department.id" class="list-group-item list-group-item-info">{{ department.name }}</a>
                                     </div>
                                     <button type="button" @click="settingDepartment()" class="btn btn-primary btn-block">管理部门</button>
                                 </div>
