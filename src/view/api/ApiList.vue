@@ -9,8 +9,7 @@
                                 <el-button type="success" icon="el-icon-plus" @click="dialogTableVisible=true, dialogTitle='添加分组', dialogButtonTitle='立即创建'">添加分组</el-button>
                             </el-col>
                             <el-col :span="20">
-                                <router-link :to="'/api/add?create=true&projectId=' + this.$route.query.projectId" class='btn btn-primary'>添加接口</router-link>
-                                <el-button type="primary" icon="el-icon-plus" round>添加接口</el-button>
+                                <router-link :to="'/api/add?create=true&projectId=' + this.$route.query.projectId" class='el-button el-button--success'>添加接口</router-link>
                             </el-col>
                         </el-row>
                     </div>
@@ -26,7 +25,7 @@
                             <el-col :span="20">
                                 <el-table :data="apis" height="450" border style="width: 100%">
                                     <el-table-column prop="name" label="接口名称" width="140" />
-                                    <el-table-column prop="url" label="接口URL" width="180" />
+                                    <el-table-column label="接口URL" width="180"> <template slot-scope="scope"><el-tag type="danger">{{ scope.row.method }}</el-tag>   {{ scope.row.url }}</template></el-table-column>
                                     <el-table-column prop="create_user" label="创建者" width="80" />
                                     <el-table-column prop="create_user" label="备注" />
                                     <el-table-column prop="update_user" label="最近更新" width="80" />
@@ -75,6 +74,7 @@
                 groups: [],
                 apis: [{
                     id: 1,
+                    method: 'get',
                     url: '/project/detail',
                     name: "冥王星",
                     version: "V1.0.1",

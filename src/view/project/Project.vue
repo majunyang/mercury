@@ -139,7 +139,7 @@
                             <el-col :span="4">
                                 <div class="panel-body">
                                     <div class="input-group">
-                                        <el-button type="primary" icon="el-icon-plus" @click="dialogTableVisible=true, dialogTitle='添加项目', dialogButtonTitle='立即创建'">添加项目</el-button>
+                                        <button class="btn btn-primary" type="button" @click="dialogTableVisible=true, dialogTitle='添加项目', dialogButtonTitle='立即创建'"><i class="el-icon-plus"></i>添加项目</button>
                                     </div>
                                 </div>
                             </el-col>
@@ -168,18 +168,21 @@
         <el-form-item label="项目名称">
             <el-input v-model="project.name" placeholder="项目名称"></el-input>
         </el-form-item>
+        <el-form-item label="负责人">
+            <el-input v-model="project.manager_id" placeholder="负责人"></el-input>
+        </el-form-item>
         <el-form-item label="版本号">
             <el-input v-model="project.version" placeholder="版本号"></el-input>
-        </el-form-item>
-        <el-form-item label="描述">
-            <el-input v-model="project.remark" placeholder="项目描述"></el-input>
         </el-form-item>
         <el-form-item label="公开项目">
             <el-select v-model="project.public" placeholder="请选择" class='width100'>
                 <el-option label="私有" value="0"/>
                 <el-option label="公开" value="1"/>
-                <el-option label="组内公开" value="2" disabled="true"/>
+                <el-option label="组内公开" value="2" :disabled="true"/>
             </el-select>
+        </el-form-item>
+        <el-form-item label="描述">
+            <el-input v-model="project.remark" placeholder="项目描述"></el-input>
         </el-form-item>
         <el-form-item>
             <el-button type="primary" @click="saveProject">{{ dialogButtonTitle }}</el-button>
@@ -210,7 +213,9 @@
                     id: 1,
                     name: "冥王星",
                     version: "V1.0.1",
-                    remark: "冥王星不是一个行星"
+                    remark: "冥王星不是一个行星",
+                    public: 1,
+                    manager_id: 2
                 }],
                 project_name: ""
             };
